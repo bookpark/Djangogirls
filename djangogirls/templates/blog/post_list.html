@@ -8,10 +8,10 @@
     <title>Post List</title>
 </head>
 <body>
-    <h1>Post List</h1>
+    <h1>검은사막 공지사항</h1>
     {% for post in posts %}
-    <div>{{ post.title }}</div>
-    <div>{{ post.content|truncatewords:10 }}</div>
+        <h3>{{ post.title }}</h3>
+        <div>{{ post.content|linebreaksbr|truncatewords:25}}</div>
     {% endfor %}
 </body>
 </html>
