@@ -21,8 +21,8 @@
 		<div class="post-container">
 		{% for post in posts %}
 			<div class="post">
-				<h4 class="post-title">{{ post.title }}</h4>
-				<p class="content">{{ post.content|linebreaksbr|truncatewords:40 }}</p>
+                <h4 class="post-title">{{ post.title }}</h4>
+				<p class="content">{{ post.content|linebreaksbr|truncatewords:15 }}</p>
 				<p class="right-text">{{ post.published_date }} | <strong>Published</strong></p>
 				<p class="right-text">{{ post.author.username }} | <strong>Author</strong></p>
 			</div>
