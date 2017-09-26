@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from blog.models import Post
 
@@ -33,14 +33,6 @@ def post_detail(request, pk):
 
 
 def post_add(request):
-    # post_list.html에 post_add로 갈 수 있는 버튼링크 추가 ({% url %} 태그 사용해서 동적으로 구성)
-    # post_form.html에 checkbox 추가
-    #   이를 이용해서 publish 여부 결정
-    #
-    # Post 생성 완료 후 (DB에 저장 후, post_list 페이지로 redirect
-    #   https://docs.djangoproject.com/ko/1.11/topics/http/shortcuts/#redirect
-    #   extra) 작성한 Post에 해당하는 post_detail 페이지로 이동
-    #
     # Post 생성시 Post.objects.create() 메서드 사용
     #
     # extra) Post delete 기능 구현
@@ -62,10 +54,21 @@ def post_add(request):
             title=title,
             content=content
         )
-        post.publish()
-        return HttpResponse(f'{post.title}, {post.content}')
+        checkbox = request.POST.get('check-checkbox')
+        if checkbox:
+            post.publish()
+        else:
+            post.save()
+        return redirect('post_detail', pk=post.pk)
     else:
         context = {
 
         }
         return render(request, 'blog/post_form.html', context)
+
+
+def post_delete(request, pk):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return redirect('post_list')
