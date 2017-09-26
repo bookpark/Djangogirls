@@ -14,6 +14,12 @@
     text-decoration: none;
 }
 
+.btn-post-add {
+    color: #ffffff;
+    float: right;
+    font-size: 25px;
+}
+
 .post-container {
 
 }
