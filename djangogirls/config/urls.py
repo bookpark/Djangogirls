@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blog.views import post_list, post_detail
+from blog.views import post_list, post_detail, post_add
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     # psot/<숫자 1개 이상/ 이 가능하도록 정규표현식 작성
     # 해당 숫자는 그룹으로 감싸고 'pk'라는 그룹명을 지정
     url(r'^post/detail/(?P<pk>\d+)/', post_detail, name='post_detail'),
+    url(r'^post/add/', post_add, name ='post_add')
 ]
