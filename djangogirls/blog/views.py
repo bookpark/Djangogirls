@@ -1,7 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render
 
 from blog.models import Post
+
+User = get_user_model()
 
 
 # View에서 인자 이름은 일반적으로 request로 정의한다
@@ -27,3 +30,42 @@ def post_detail(request, pk):
         'post': post,
     }
     return render(request, 'blog/post_detail.html', context)
+
+
+def post_add(request):
+    # post_list.html에 post_add로 갈 수 있는 버튼링크 추가 ({% url %} 태그 사용해서 동적으로 구성)
+    # post_form.html에 checkbox 추가
+    #   이를 이용해서 publish 여부 결정
+    #
+    # Post 생성 완료 후 (DB에 저장 후, post_list 페이지로 redirect
+    #   https://docs.djangoproject.com/ko/1.11/topics/http/shortcuts/#redirect
+    #   extra) 작성한 Post에 해당하는 post_detail 페이지로 이동
+    #
+    # Post 생성시 Post.objects.create() 메서드 사용
+    #
+    # extra) Post delete 기능 구현
+    #   def post_delete(request, pk):
+    #       (POST 요청에서만 동작해야함
+    #       -> pk에 해당하는 Post를 삭제하고 post_list 페이지로 이동
+    if request.method == 'POST' and request.POST.get('title') and request.POST.get('content'):
+        # request.POST에서 'title', 'content' 키에 해당하는 value를 받아오기
+        # 새 Post 객체를 생성 (save() 호출없음 단순 인스턴스 생성)
+        # 생성한 후에는 해당 객체의 title, content를 HttpResponse로 전달
+
+        # title이나 content 값이 오지 않았을 경우에는 객체를 생성하지 않고 다시 작성페이지로 이동
+        #   extra) 작성페이지로 이동 시 '값을 입력해주세요'라는 텍스트를 어딘가에 표
+        title = request.POST['title']
+        content = request.POST['content']
+        author = User.objects.get(username='admin')
+        post = Post(
+            author=author,
+            title=title,
+            content=content
+        )
+        post.publish()
+        return HttpResponse(f'{post.title}, {post.content}')
+    else:
+        context = {
+
+        }
+        return render(request, 'blog/post_form.html', context)
