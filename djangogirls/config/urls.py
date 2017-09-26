@@ -21,5 +21,7 @@ from blog.views import post_list, post_detail
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', post_list),
-    url(r'^post/detail/', post_detail),
+    # psot/<숫자 1개 이상/ 이 가능하도록 정규표현식 작성
+    # 해당 숫자는 그룹으로 감싸고 'pk'라는 그룹명을 지정
+    url(r'^post/detail/(?P<pk>\d+)/', post_detail, name='post_detail'),
 ]
