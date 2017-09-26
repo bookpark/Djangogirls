@@ -7,7 +7,9 @@
 .blog-header .blog-title {
     margin: 0;
 }
-.blog-header .blog-title > a, a:hover, a:visited {
+.blog-header .blog-title > a,
+.blog-header .blog-title > a:hover,
+.blog-header .blog-title > a:visited {
     color: white;
     text-decoration: none;
 }
