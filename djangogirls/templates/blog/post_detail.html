@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="post-container">
+        <a class="btn btn-default btn-sm btn-back-list" href="/">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            목록으로 돌아가기
+        </a>
         <div class="post">
             <h4 class="post-title">{{ post.title }}</h4>
             <p class="content">{{ post.content|linebreaksbr }}</p>
