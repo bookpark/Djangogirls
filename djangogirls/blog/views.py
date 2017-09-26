@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from blog.models import Post
@@ -17,8 +18,11 @@ def post_list(request):
 # post_detail 기능을 하는 함수를 구현
 # 'post'라는 key로 Post.objects.first()에 해당하는 Post 객체를 전달
 # 템플릿은 'blog/post_detail.html'을 사용
-def post_detail(request):
-    post = Post.objects.first()
+def post_detail(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return HttpResponse('페이지를 찾을 수 없습니다.', status=404)
     context = {
         'post': post,
     }
