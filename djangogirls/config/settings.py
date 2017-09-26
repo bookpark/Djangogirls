@@ -17,8 +17,14 @@ import os
 # 하위폴더로: os.path.join(path, <하위폴더>)
 # os.path.abspath(__file__) >> 현재 파일의 경로
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 템플릿 파일을 저장할 'templates' 폴더
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-
+# 정적 파일을 저장할 'static' 폴더
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# Django에서 정적 파일을 검색하고 가져올 폴더 목록
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
