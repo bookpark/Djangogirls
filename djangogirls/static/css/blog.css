@@ -17,6 +17,10 @@
 .post-container {
 
 }
+.post-container > .btn-back-list {
+    margin-top: 10px;
+}
+
 .post-container > .post {
     padding-top: 10px;
     padding-bottom: 10px;
