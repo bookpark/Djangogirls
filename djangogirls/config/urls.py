@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blog.views import post_list, post_detail, post_add, post_delete, post_not_published, post_publish
+from blog.views import post_list, post_detail, post_add, post_delete, post_created, post_publish
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', post_list, name='post_list'),
-    url(r'^post/created/', post_not_published, name='post_not_published'),
+    url(r'^post/created/', post_created, name='post_created'),
     url(r'^post/publish/(?P<pk>\d+)', post_publish, name='post_publish'),
     # psot/<숫자 1개 이상/ 이 가능하도록 정규표현식 작성
     # 해당 숫자는 그룹으로 감싸고 'pk'라는 그룹명을 지정

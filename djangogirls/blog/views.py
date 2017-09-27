@@ -18,12 +18,12 @@ def post_list(request):
     return render(request, 'blog/post_list.html', context)
 
 
-def post_not_published(request):
+def post_created(request):
     posts = Post.objects.filter(published_date__isnull=True)
     context = {
         'posts': posts,
     }
-    return render(request, 'blog/post_not_published.html', context)
+    return render(request, 'blog/post_created', context)
 
 
 # post_detail 기능을 하는 함수를 구현
@@ -78,4 +78,4 @@ def post_publish(request, pk):
     if request.method == 'POST':
         post = Post.objects.get(pk=pk)
         post.publish()
-        return redirect('post_not_published')
+        return redirect('post_created')
