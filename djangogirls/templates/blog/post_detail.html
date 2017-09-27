@@ -15,5 +15,9 @@
             {% csrf_token %}
             <input type="submit" value="글 삭제하기"/>
         </form>
+        <form action="{% url 'post_publish' pk=post.pk %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="글 게재하기"/>
+        </form>
     </div>
 {% endblock %}

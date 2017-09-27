@@ -18,6 +18,14 @@ def post_list(request):
     return render(request, 'blog/post_list.html', context)
 
 
+def post_not_published(request):
+    posts = Post.objects.filter(published_date__isnull=True)
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'blog/post_not_published.html', context)
+
+
 # post_detail 기능을 하는 함수를 구현
 # 'post'라는 key로 Post.objects.first()에 해당하는 Post 객체를 전달
 # 템플릿은 'blog/post_detail.html'을 사용
@@ -33,12 +41,6 @@ def post_detail(request, pk):
 
 
 def post_add(request):
-    # Post 생성시 Post.objects.create() 메서드 사용
-    #
-    # extra) Post delete 기능 구현
-    #   def post_delete(request, pk):
-    #       (POST 요청에서만 동작해야함
-    #       -> pk에 해당하는 Post를 삭제하고 post_list 페이지로 이동
     if request.method == 'POST' and request.POST.get('title') and request.POST.get('content'):
         # request.POST에서 'title', 'content' 키에 해당하는 value를 받아오기
         # 새 Post 객체를 생성 (save() 호출없음 단순 인스턴스 생성)
@@ -49,7 +51,7 @@ def post_add(request):
         title = request.POST['title']
         content = request.POST['content']
         author = User.objects.get(username='admin')
-        post = Post(
+        post = Post.objects.create(
             author=author,
             title=title,
             content=content
@@ -57,8 +59,6 @@ def post_add(request):
         checkbox = request.POST.get('check-checkbox')
         if checkbox:
             post.publish()
-        else:
-            post.save()
         return redirect('post_detail', pk=post.pk)
     else:
         context = {
@@ -72,3 +72,10 @@ def post_delete(request, pk):
         post = Post.objects.get(pk=pk)
         post.delete()
         return redirect('post_list')
+
+
+def post_publish(request, pk):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.publish()
+        return redirect('post_not_published')
