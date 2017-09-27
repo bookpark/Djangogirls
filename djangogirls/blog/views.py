@@ -23,7 +23,7 @@ def post_created(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'blog/post_created', context)
+    return render(request, 'blog/post_created.html', context)
 
 
 # post_detail 기능을 하는 함수를 구현
