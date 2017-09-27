@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="post-container">
-        <a class="btn btn-default btn-sm btn-back-list" href="/">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            목록으로 돌아가기
-        </a>
+        {% if post.published_date %}
+            <a class="btn btn-default btn-sm btn-back-list" href="/">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                목록으로 돌아가기
+            </a>
+        {% endif %}
+        {% if not post.published_date %}
+            <a class="btn btn-default btn-sm btn-back-list" href="{% url 'post_created' %}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                목록으로 돌아가기
+            </a>
+        {% endif %}
         <div class="post">
             <h4 class="post-title">{{ post.title }}</h4>
             <p class="content">{{ post.content|linebreaksbr }}</p>
@@ -16,10 +24,10 @@
             <input type="submit" value="글 삭제하기"/>
         </form>
         {% if not post.published_date %}
-        <form action="{% url 'post_publish' pk=post.pk %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="글 게재하기"/>
-        </form>
+            <form action="{% url 'post_publish' pk=post.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="글 게재하기"/>
+            </form>
         {% endif %}
     </div>
 {% endblock %}
