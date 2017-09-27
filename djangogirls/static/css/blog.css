@@ -20,6 +20,17 @@
     font-size: 25px;
 }
 
+.btn-post-created {
+    color: #ffffff;
+    float: right;
+    font-size: 25px;
+    padding-right: 25px;
+}
+
+.btn-post-delete {
+    float: right;
+}
+
 .post-container {
 
 }

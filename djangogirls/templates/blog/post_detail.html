@@ -11,13 +11,15 @@
             <p class="right-text">{{ post.published_date }} | <strong>Published</strong></p>
             <p class="right-text">{{ post.author.username }} | <strong>Author</strong></p>
         </div>
-        <form action="{% url 'post_delete' pk=post.pk %}" method="post">
+        <form action="{% url 'post_delete' pk=post.pk %}" class="btn-post-delete" method="post">
             {% csrf_token %}
             <input type="submit" value="글 삭제하기"/>
         </form>
+        {% if not post.published_date %}
         <form action="{% url 'post_publish' pk=post.pk %}" method="post">
             {% csrf_token %}
             <input type="submit" value="글 게재하기"/>
         </form>
+        {% endif %}
     </div>
 {% endblock %}

@@ -15,6 +15,7 @@
 <div class="blog-header">
     <div class="container">
         <a href="{% url 'post_add' %}" class="btn-post-add"><span class="glyphicon glyphicon-plus post-add-plus"></span></a>
+        <a href="{% url 'post_created' %}" class="btn-post-created"><span class="glyphicon glyphicon-arrow-up post-created"></span></a>
         <h2 class="blog-title"><a href="{% url 'post_list' %}">{% block title %}공지사항{% endblock %}</a></h2>
         </a>
     </div>
