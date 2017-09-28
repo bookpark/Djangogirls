@@ -73,6 +73,7 @@ def post_delete(request, pk):
         post = Post.objects.get(pk=pk)
         post.delete()
         return redirect('post_list')
+    return HttpResponse('Permission Denied', status=403)
 
 
 def post_publish(request, pk):
@@ -80,3 +81,4 @@ def post_publish(request, pk):
         post = Post.objects.get(pk=pk)
         post.publish()
         return redirect('post_created')
+    return HttpResponse('Permission Denied', status=403)
