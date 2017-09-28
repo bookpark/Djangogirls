@@ -41,31 +41,36 @@ def post_detail(request, pk):
 
 
 def post_add(request):
-    if request.method == 'POST' and request.POST.get('title') and request.POST.get('content'):
+    if request.method == 'POST':
         # request.POST에서 'title', 'content' 키에 해당하는 value를 받아오기
         # 새 Post 객체를 생성 (save() 호출없음 단순 인스턴스 생성)
         # 생성한 후에는 해당 객체의 title, content를 HttpResponse로 전달
 
         # title이나 content 값이 오지 않았을 경우에는 객체를 생성하지 않고 다시 작성페이지로 이동
         #   extra) 작성페이지로 이동 시 '값을 입력해주세요'라는 텍스트를 어딘가에 표
-        title = request.POST['title']
-        content = request.POST['content']
+        title = request.POST.get('title')
+        content = request.POST.get('content')
         author = User.objects.get(username='admin')
-        post = Post.objects.create(
-            author=author,
-            title=title,
-            content=content
-        )
-        checkbox = request.POST.get('check-checkbox')
-        if checkbox:
-            post.publish()
-        return redirect('post_detail', pk=post.pk)
-        # return HttpResponseRedirect(f'/post/detail/{post.pk}'
-    else:
-        context = {
 
+        if title and content:
+            post = Post.objects.create(
+                author=author,
+                title=title,
+                content=content
+            )
+            checkbox = request.POST.get('check-checkbox')
+            if checkbox:
+                post.publish()
+            return redirect('post_detail', pk=post.pk)
+
+        context = {
+            'title': title,
+            'content': content,
         }
-        return render(request, 'blog/post_form.html', context)
+    else:
+        context = {}
+
+    return render(request, 'blog/post_form.html', context)
 
 
 def post_delete(request, pk):
