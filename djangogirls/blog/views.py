@@ -60,6 +60,7 @@ def post_add(request):
         if checkbox:
             post.publish()
         return redirect('post_detail', pk=post.pk)
+        # return HttpResponseRedirect(f'/post/detail/{post.pk}'
     else:
         context = {
 
